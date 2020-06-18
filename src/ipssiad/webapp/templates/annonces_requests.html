@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+    <h3>Rechercher une demande</h3>
+    <form action ='/annonces/requests/search' method="post">
+        {% csrf_token %}
+        <input type ="text" name="q">
+        <input type = "submit" name="valider">
+    </form>
+    {% if requests_list is empty %}
+        <p>Il n'ya pas encore de demande</p>
+    {% else %}
+    <h2>Les Demandes</h2>
+         <ul>
+            {% for request in requests_list %}
+                <li>
+                    {{ request.title }}
+                    {{ request.uuid}}
+                    <a href= "{% url 'webapp:webapp_annonce' uuid=request.uuid %}">détails</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

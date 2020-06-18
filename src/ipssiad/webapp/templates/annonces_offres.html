@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+    <h3>Rechercher une offre</h3>
+    <form action ='/annonces/offres/search' method="post">
+        {% csrf_token %}
+        <input type ="text" name="q">
+        <input type = "submit" name="valider">
+    </form>
+    {% if offers_list is empty %}
+        <p>Il n'ya pas encore d'offre</p>
+    {% else %}
+    <h2>Les Offres</h2>
+         <ul>
+            {% for offer in offers_list %}
+                <li>
+                    {{ offer.title }}
+                    {{ offer.uuid }}
+                    <a href= "{% url 'webapp:webapp_annonce' uuid=offer.uuid %}">détails</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h4>Détails de l'annonce</h4>
+<ul>
+    <li>
+        {{ad.title}}
+    </li>
+    <li>
+        {{ad.type}}
+    </li>
+    <li>
+        {{ad.user}}
+    </li>
+    <li>
+        {{ad.created}}
+    </li>
+        {% if  conversation is empty %}
+            <a href= "{% url 'webapp:webapp_conversation_start' uuid=ad.uuid %}"><button>Start conversation</button></a>
+        {% else %}
+            <h2>Conversation</h2>
+            <form action="{% url 'webapp:webapp_new_message' uuid=conversation.uuid %}" method="post">
+                {% csrf_token %}
+                <input type ="text" name="q">
+                <input type ="submit" name="envoyer" value="Envoyer">
+            </form>
+        {% endif %}
+</ul>
+
+{% if messages is not empty %}
+    {% for message in messages %}
+        <ul>
+            {{message.content}}
+        </ul>
+    {% endfor %}
+{% else %}
+
+{% endif %}
+
+
+
+
+{% endblock %}

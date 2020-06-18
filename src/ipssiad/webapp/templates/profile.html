@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>profile de {{user.username}}</h3>
+<span>{{user.email}}</span>
+
+{% if offers_list is empty %}
+    <p>Vous n'avez pas encore publié d'offre</p>
+{% else %}
+    <h4>Liste des offres de  {{user.username}}</h4>
+    <ul>
+        {% for offer in offers_list %}
+            <li>{{offer.title}}</li>
+        <a href= "{% url 'webapp:webapp_annonce' uuid=offer.uuid %}">détails</a>
+        {% endfor %}
+    </ul>
+
+{% endif %}
+
+
+{% if requests_list is empty %}
+    <p>Vous n'avez pas encore publié de demande</p>
+{% else %}
+    <h4>Liste des demandes de {{user.username}}</h4>
+    <ul>
+        {% for request in requests_list %}
+        <li>{{request.title}}</li>
+        <a href= "{% url 'webapp:webapp_annonce' uuid=request.uuid %}">détails</a>
+        {% endfor %}
+    </ul>
+
+
+{% endif %}
+<h4>Liste des conversations</h4>
+
+{% endblock %}
+
+
+
+
+

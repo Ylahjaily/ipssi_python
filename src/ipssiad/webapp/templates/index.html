@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if offers_list is empty %}
+        <p>Il n'ya pas encore d'offre</p>
+    {% else %}
+        <h2>Les 5 dernières offres</h2>
+         <ul>
+        {% for offer in offers_list %}
+            <li>
+                {{ offer.title }}
+                <a href= "{% url 'webapp:webapp_annonce' uuid=offer.uuid %}">détails</a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if requests_list is empty %}
+        <p>Il n'ya pas encore de demande</p>
+    {% else %}
+    <h2>Les 5 dernières demandes</h2>
+    <ul>
+        {% for request in requests_list %}
+            <li>
+                {{ request.title }}
+                <a href= "{% url 'webapp:webapp_annonce' uuid=request.uuid %}">détails</a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if users_list in empty%}
+        <p>Il n'ya pas encore d'utilisateurs</p>
+    {% else %}
+        <h2>Top 5 des utilisateurs</h2>
+        <ul>
+            {% for user in users_list%}
+                <li>{{user.username}}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock %}

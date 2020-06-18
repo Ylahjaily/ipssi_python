@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if article_list %}
+        <h1>Liste des articles</h1>
+        <div class="row">
+            {% for article in article_list %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ article.title }}</h5>
+                            <p class="card-text">{{ article.content|slice:":128" }}</p>
+                            <a href="{% url 'edito:article' uuid=article.uuid %}" class="btn btn-primary">Afficher</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            {{ article.user }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
