@@ -6,6 +6,7 @@ app_name = 'webapp'
 urlpatterns = [
     path('', views.webapp_index, name='webapp_index'),
     path('annonces/offres', views.webapp_annonces_offres, name='webapp_annonce_offres'),
+    path('annonces/new', views.webapp_annonce_new, name='webapp_annonce_new'),
     path('annonces/requests', views.webapp_annonces_requests, name='webapp_annonces_requests'),
     path('annonces/offres/search', views.webapp_annonces_offres_search, name='webapp_annonces_offres_search'),
     path('annonces/requests/search', views.webapp_annonces_requests_search, name='webapp_annonces_requests_search'),

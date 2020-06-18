@@ -15,29 +15,27 @@
     <li>
         {{ad.created}}
     </li>
-        {% if  conversation is empty %}
-            <a href= "{% url 'webapp:webapp_conversation_start' uuid=ad.uuid %}"><button>Start conversation</button></a>
-        {% else %}
-            <h2>Conversation</h2>
-            <form action="{% url 'webapp:webapp_new_message' uuid=conversation.uuid %}" method="post">
-                {% csrf_token %}
-                <input type ="text" name="q">
-                <input type ="submit" name="envoyer" value="Envoyer">
-            </form>
+        {% if user.is_authenticated %}
+            {% if  conversation is empty %}
+                <a href= "{% url 'webapp:webapp_conversation_start' uuid=ad.uuid %}"><button>Start conversation</button></a>
+            {% else %}
+                <h2>Conversation</h2>
+                <form action="{% url 'webapp:webapp_new_message' uuid=conversation.uuid %}" method="post">
+                    {% csrf_token %}
+                    <input type ="text" name="q">
+                    <input type ="submit" name="envoyer" value="Envoyer">
+                </form>
+            {% endif %}
+            {% if messages is not empty %}
+                {% for message in messages %}
+                    <ul>
+                        <li>{{message.content}}</li>
+                    </ul>
+                {% endfor %}
+            {% else %}
+            {% endif %}
         {% endif %}
+
 </ul>
-
-{% if messages is not empty %}
-    {% for message in messages %}
-        <ul>
-            {{message.content}}
-        </ul>
-    {% endfor %}
-{% else %}
-
-{% endif %}
-
-
-
 
 {% endblock %}

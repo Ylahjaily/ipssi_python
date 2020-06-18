@@ -12,13 +12,20 @@
         <div class="container">
             <nav>
 
-                <a href = "{% url 'webapp:webapp_register' %}">Register</a>
-                <a href = "{% url 'webapp:webapp_login' %}">Login</a>
-                <a href = "{% url 'webapp:webapp_logout' %}">Logout</a>
+                {% if user.is_authenticated %}
+                    <a href = "{% url 'webapp:webapp_profile' %}">Profil</a>
+                    <a href = "{% url 'webapp:webapp_logout' %}">Logout</a>
+                {% else %}
+                    <a href = "{% url 'webapp:webapp_login' %}">Login</a>
+                    <a href = "{% url 'webapp:webapp_register' %}">Register</a>
+                {% endif %}
+
                 <a href = "{% url 'webapp:webapp_index' %}">Accueil</a>
                 <a href = "{% url 'webapp:webapp_annonces_requests' %}">Demandes</a>
                 <a href = "{% url 'webapp:webapp_annonce_offres' %}">Offres</a>
-
+                {% if user.is_authenticated %}
+                    <a href = "{% url 'webapp:webapp_annonce_new' %}">Créer une annonce</a>
+                {% endif %}
             </nav>
             {% block content %} {% endblock %}
         </div>

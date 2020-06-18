@@ -6,7 +6,7 @@ from django.db.models import Count
 from django.urls import reverse
 from webapp import views
 
-from core.models import AdOfferProxy, AdRequestProxy, Ad, OffersByUserProxy, RequestByUserProxy, Conversation, Message
+from core.models import AdOfferProxy, AdRequestProxy, Ad, OffersByUserProxy, RequestByUserProxy, Conversation, Message, Category
 
 
 def webapp_index(request):
@@ -23,6 +23,7 @@ def webapp_index(request):
 
     return HttpResponse(template.render(context, request))
 
+
 def webapp_register(request):
     context = {}
     template = loader.get_template('register.html')
@@ -32,8 +33,8 @@ def webapp_register(request):
         email = request.POST['email'] or None
         last_name = request.POST['last_name'] or None
         first_name = request.POST['first_name'] or None
-
         User(username=username, password=password, email=email, last_name=last_name, first_name=first_name).save()
+
     return HttpResponse(template.render(context, request))
 
 
@@ -100,6 +101,23 @@ def webapp_annonce(request, uuid):
         })
     return HttpResponse(template.render(context, request))
 
+
+def webapp_annonce_new(request):
+    template = loader.get_template('new_annonce.html')
+    context = {}
+    categories = Category.objects.all() or None
+    if categories is not None:
+        context.update({
+            'categories': categories
+        })
+    if request.method == 'POST':
+        title = request.POST['title'] or None
+        description = request.POST['description'] or None
+        category = Category.objects.get(title=request.POST['category']) or None
+        type = request.POST['type'] or None
+        Ad(title=title, description=description, category=category, type=type, user=request.user).save()
+        return HttpResponseRedirect(reverse('webapp:webapp_profile'))
+    return HttpResponse(template.render(context, request))
 
 def webapp_annonces_offres(request):
     context = {}
@@ -198,7 +216,7 @@ def webapp_new_message(request, uuid):
     context.update({
         'conversation': conversation,
         'messages': messages,
-        'ad' : ad
+        'ad': ad
     })
 
     return HttpResponse(template.render(context, request))

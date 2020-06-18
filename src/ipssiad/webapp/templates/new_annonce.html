@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Créer une annonce</h2>
+    <form action="{% url 'webapp:webapp_annonce_new'  %}" method="post">
+        {% csrf_token %}
+        <label>Titre</label>
+        <input type ="text" name="title">
+
+        <label>Description</label>
+        <input type ="text" name="description">
+
+
+        <label>Categorie</label>
+        <select   name="category">
+        {% for category in categories%}
+            <option value="{{category.title}}">{{category.title}}</option>
+        {% endfor %}
+        </select>
+
+        <label>Type</label>
+        <select   name="type">
+
+            <option value="offer">Offre</option>
+            <option value="request">Demande</option>
+
+        </select>
+
+        <input type = "submit" name="valider" value="valider">
+    </form>
+
+{% endblock %}
